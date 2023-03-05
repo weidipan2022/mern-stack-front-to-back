@@ -6,13 +6,20 @@ import {
   REGISTER_FAIL,
   USER_LOADED,
   AUTH_ERROR,
+  LOGIN_SUCCESS,
+  LOGIN_FAIL,
 } from "./types";
-import setAuthToken from "../utils/setAuthToken";
 
 // Load User
-export const loadUser = (username, password) => async (dispatch) => {
+export const loadUser = () => async (dispatch) => {
   try {
-    const res = await axios.get("/api/auth");
+    const config = {
+      headers: {
+        "x-auth-token": localStorage.getItem("token"),
+      },
+    };
+
+    const res = await axios.get("/api/auth", config);
 
     dispatch({
       type: USER_LOADED,
@@ -45,6 +52,7 @@ export const register =
         type: REGISTER_SUCCESS,
         payload: res.data,
       });
+      dispatch(loadUser());
     } catch (err) {
       const errors = err.response.data.errors;
       if (errors) {
@@ -53,6 +61,39 @@ export const register =
 
       dispatch({
         type: REGISTER_FAIL,
+      });
+    }
+  };
+
+// Login User
+export const login =
+  ({ email, password }) =>
+  async (dispatch) => {
+    // Headers
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+
+    // Request Body
+    const body = JSON.stringify({ email, password });
+    console.log(body);
+    try {
+      const res = await axios.post("/api/auth", body, config);
+      dispatch({
+        type: LOGIN_SUCCESS,
+        payload: res.data,
+      });
+      dispatch(loadUser());
+    } catch (err) {
+      const errors = err.response.data.errors;
+      if (errors) {
+        errors.forEach((error) => dispatch(setAlert(error.msg, "danger")));
+      }
+
+      dispatch({
+        type: LOGIN_FAIL,
       });
     }
   };

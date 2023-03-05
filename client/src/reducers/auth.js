@@ -3,6 +3,8 @@ import {
   REGISTER_FAIL,
   AUTH_ERROR,
   USER_LOADED,
+  LOGIN_SUCCESS,
+  LOGIN_FAIL,
 } from "../actions/types";
 
 const initialState = {
@@ -18,7 +20,6 @@ function authReducer(state = initialState, action) {
     switch (type) {
       case USER_LOADED:
         console.log("USER_LOADED");
-        localStorage.setItem("token", payload.token);
         return {
           ...state,
           isAuthenticated: true,
@@ -26,8 +27,10 @@ function authReducer(state = initialState, action) {
           user: payload,
         };
       case REGISTER_SUCCESS:
-        console.log("REGISTER_SUCCESS");
+      case LOGIN_SUCCESS:
+        console.log("Register success or login success");
         localStorage.setItem("token", payload.token);
+        console.log("payload", payload);
         return {
           ...state,
           ...payload,
@@ -36,6 +39,7 @@ function authReducer(state = initialState, action) {
         };
       case AUTH_ERROR:
       case REGISTER_FAIL:
+      case LOGIN_FAIL:
         console.log("Auth error or register fail");
         localStorage.removeItem("token");
         return {
