@@ -1,3 +1,4 @@
 {
-    "mongoURL": "mongodb+srv://panweidi2018:Pwd3926018@devconnector.oe6ou1i.mongodb.net/?retryWrites=true&w=majority"
+    "mongoURL": "mongodb+srv://panweidi2018:Pwd3926018@devconnector.oe6ou1i.mongodb.net/?retryWrites=true&w=majority",
+    "jwtSecret": "myscrettoken"
 }
