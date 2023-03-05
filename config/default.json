@@ -1,4 +1,6 @@
 {
     "mongoURL": "mongodb+srv://panweidi2018:Pwd3926018@devconnector.oe6ou1i.mongodb.net/?retryWrites=true&w=majority",
-    "jwtSecret": "myscrettoken"
+    "jwtSecret": "myscrettoken",
+    "githubClientId": "3213a568e3b06e9fce44",
+    "githubSecret": "90b1902a3b587036dc0134a4ef2f3811a2c1bfae"
 }
